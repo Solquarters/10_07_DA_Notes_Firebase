@@ -9,11 +9,16 @@ import { Observable } from 'rxjs';
 export class NoteListService {
 
 
+  items$;
   firestore: Firestore = inject(Firestore);
-  constructor() {
 
-   }
-   // const itemCollection = collection(this.firestore, 'items');
+  constructor() {
+   
+    this.items$ = collectionData(this.getNotesRef());
+  }
+
+
+
    getNotesRef(){
     return collection(this.firestore, 'notes');
    }
