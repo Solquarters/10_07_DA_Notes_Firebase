@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "danotes-c0d74": {
+      "hosting": {
+        "danotes": [
+          "danotes-c0d74"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "danotes-c0d74"
+  }
+}
