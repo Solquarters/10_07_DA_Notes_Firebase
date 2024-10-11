@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
-import { Firestore, collectionData, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, doc, onSnapshot, addDoc, updateDoc } from '@angular/fire/firestore';
 import { elementAt, Observable } from 'rxjs';
 import { Note } from '../interfaces/note.interface';
 
@@ -36,6 +36,11 @@ export class NoteListService {
     //     console.log(element);
     //   });
     // })
+  }
+
+  async updateNote(collectionId: string, docId:string, item: {} ){
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(this.getSingleDocRef(collectionId, docId), item);
   }
 
   async addNote(item: Note){
