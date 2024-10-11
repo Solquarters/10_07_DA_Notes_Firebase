@@ -40,7 +40,9 @@ export class NoteListService {
 
   async updateNote(collectionId: string, docId:string, item: {} ){
     // Set the "capital" field of the city 'DC'
-    await updateDoc(this.getSingleDocRef(collectionId, docId), item);
+    await updateDoc(this.getSingleDocRef(collectionId, docId), item).catch(
+      (error) => {console.log(error);}
+    );
   }
 
   async addNote(item: Note){
