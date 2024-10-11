@@ -38,7 +38,7 @@ export class NoteListService {
     // })
   }
 
-  async deleteNote(collectionId: string, docId: string){
+  async deleteNote(collectionId: "notes" | "trash", docId: string){
     await deleteDoc(this.getSingleDocRef(collectionId, docId)).catch(
       (error) => {console.log(error);}
     );
@@ -74,7 +74,7 @@ export class NoteListService {
   }
 
 
-  async addNote(item: Note){
+  async addNote(item: Note, collectionId: "notes" | "trash"){
     await addDoc(this.getNotesRef(), item ).catch(
       (error) => {console.error(error)}
     ).then (
