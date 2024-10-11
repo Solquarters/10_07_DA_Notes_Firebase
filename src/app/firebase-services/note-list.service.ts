@@ -38,7 +38,7 @@ export class NoteListService {
     // })
   }
 
-  async addNote(item: {}){
+  async addNote(item: Note){
     await addDoc(this.getNotesRef(), item ).catch(
       (error) => {console.error(error)}
     ).then (
