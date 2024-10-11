@@ -39,9 +39,12 @@ export class NoteListService {
   }
 
   async deleteNote(collectionId: "notes" | "trash", docId: string){
-    await deleteDoc(this.getSingleDocRef(collectionId, docId)).catch(
-      (error) => {console.log(error);}
-    );
+    try {
+      await deleteDoc(this.getSingleDocRef(collectionId, docId));
+      console.log("deleteNote() called");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
@@ -80,8 +83,6 @@ export class NoteListService {
     ).then (
       (docRef)=> {console.log("Document written with ID: ", docRef?.id);}
     )
-
-    
   }
 
 
