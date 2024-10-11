@@ -9,44 +9,60 @@ import { Note } from '../interfaces/note.interface';
 })
 export class NoteListService {
 
+  trashNotes: Note[] = [];
+  normalNotes: Note[] = [];
 
-  items$;
-  items;
+  unsubTrash;
+  unsubNotes;
 
-  unsubList;
-  unsubSingle;
+  // items$;
+  // items;
+
+  // unsubList;
+
+  // unsubSingle;
 
   firestore: Firestore = inject(Firestore);
 
   constructor() {
 
-    this.unsubList = onSnapshot(this.getNotesRef(), (list) => {
-      list.forEach(element => {
-        console.log(this.setNoteObject(element.data(), element.id));
-      });
-    });
-
-    this.unsubSingle = onSnapshot(this.getSingleDocRef('notes', 'a989809870897897'), (element) => {
-      
-    });
-
-  
-
-   
-    this.items$ = collectionData(this.getNotesRef());
-    this.items = this.items$.subscribe((list) => {
-      list.forEach(element => {
-        console.log(element);
-      });
-    })
-    
+    this.unsubNotes = this.subNotesList();
+    this.unsubTrash = this.subTrashList();
+    // this.unsubSingle = onSnapshot(this.getSingleDocRef('notes', 'a989809870897897'), (element) => {
+    // });
+    // this.items$ = collectionData(this.getNotesRef());
+    // this.items = this.items$.subscribe((list) => {
+    //   list.forEach(element => {
+    //     console.log(element);
+    //   });
+    // })
   }
 
-
   ngonDestroy(){
-    this.items.unsubscribe();
-    this.unsubSingle();
-    this.unsubList();
+    // this.items.unsubscribe();
+    // this.unsubSingle();
+    this.unsubNotes();
+    this.unsubTrash();
+  }
+
+  subTrashList(){
+   return onSnapshot(this.getTrashRef(), (list) => {
+    this.trashNotes = [];
+      list.forEach(element => {
+        this.trashNotes.push(this.setNoteObject(element.data(), element.id));
+        // console.log(this.setNoteObject(element.data(), element.id));
+      });
+    });
+  }
+
+  subNotesList(){
+    return onSnapshot(this.getNotesRef(), (list) => {
+      this.normalNotes = [];
+      list.forEach(element => {
+        this.normalNotes.push(this.setNoteObject(element.data(), element.id));
+        // console.log(this.setNoteObject(element.data(), element.id));
+      });
+    });
   }
 
 
