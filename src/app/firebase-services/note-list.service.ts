@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
-import { Firestore, collectionData, collection, doc, onSnapshot, addDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { elementAt, Observable } from 'rxjs';
 import { Note } from '../interfaces/note.interface';
 
@@ -37,6 +37,13 @@ export class NoteListService {
     //   });
     // })
   }
+
+  async deleteNote(collectionId: string, docId: string){
+    await deleteDoc(this.getSingleDocRef(collectionId, docId)).catch(
+      (error) => {console.log(error);}
+    );
+  }
+
 
   async updateNote(note: Note ){
     // Set the "capital" field of the city 'DC'
