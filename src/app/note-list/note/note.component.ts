@@ -50,6 +50,8 @@ export class NoteComponent {
   }
 
   saveNote(){
+
+    this.noteService.updateNote(this.note);
     
   }
 }

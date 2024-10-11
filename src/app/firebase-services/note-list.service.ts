@@ -38,12 +38,34 @@ export class NoteListService {
     // })
   }
 
-  async updateNote(collectionId: string, docId:string, item: {} ){
+  async updateNote(note: Note ){
     // Set the "capital" field of the city 'DC'
-    await updateDoc(this.getSingleDocRef(collectionId, docId), item).catch(
-      (error) => {console.log(error);}
-    );
+    if(note.id){
+      let docRef = this.getSingleDocRef(this.getCollectionIdFromNote(note), note.id);
+      await updateDoc(docRef, this.getCleanJson(note)).catch(
+        (error) => {console.log(error);}
+      );
+    }
+   
   }
+
+  getCleanJson(note:Note):{} {
+    return {
+      type: note.type,
+      title: note.title,
+      content: note.content,
+      marked: note.marked
+    }
+  }
+
+  getCollectionIdFromNote(note:Note){
+    if(note.type == 'note'){
+      return 'notes';
+    }else{
+      return 'trash';
+    }
+  }
+
 
   async addNote(item: Note){
     await addDoc(this.getNotesRef(), item ).catch(
@@ -54,6 +76,7 @@ export class NoteListService {
 
     
   }
+
 
   ngonDestroy(){
     // this.items.unsubscribe();
