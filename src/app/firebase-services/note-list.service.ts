@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
 import { Firestore, collectionData, collection, doc, onSnapshot } from '@angular/fire/firestore';
 import { elementAt, Observable } from 'rxjs';
+import { Note } from '../interfaces/note.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class NoteListService {
 
     this.unsubList = onSnapshot(this.getNotesRef(), (list) => {
       list.forEach(element => {
-        console.log(element);
+        console.log(this.setNoteObject(element.data(), element.id));
       });
     });
 
@@ -29,8 +30,7 @@ export class NoteListService {
       
     });
 
-    this.unsubSingle();
-    this.unsubList();
+  
 
    
     this.items$ = collectionData(this.getNotesRef());
@@ -39,9 +39,15 @@ export class NoteListService {
         console.log(element);
       });
     })
-    this.items.unsubscribe();
+    
   }
 
+
+  ngonDestroy(){
+    this.items.unsubscribe();
+    this.unsubSingle();
+    this.unsubList();
+  }
 
 
    getNotesRef(){
@@ -53,6 +59,20 @@ export class NoteListService {
    }
 
    getSingleDocRef(collectionId: string, docId: string){
- return doc(collection(this.firestore, collectionId), docId);
+    return doc(collection(this.firestore, collectionId), docId);
    }
+
+   setNoteObject(obj: any, id:string) : Note{
+
+    return {
+      id: id || "",
+      type: obj.type || "note",
+      title: obj.title || "",
+      content: obj.content || "",
+      marked: obj.marked || false,
+    }
+
+   }
+
+
 }
