@@ -41,7 +41,7 @@ export class NoteListService {
   async deleteNote(collectionId: "notes" | "trash", docId: string){
     try {
       await deleteDoc(this.getSingleDocRef(collectionId, docId));
-      console.log("deleteNote() called");
+      console.log("deleteNote() and deleteDoc() called");
     } catch (error) {
       console.log(error);
     }
