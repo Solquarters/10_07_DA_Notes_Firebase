@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { inject } from '@angular/core';
-import { Firestore, collectionData, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, doc, onSnapshot, addDoc, updateDoc, deleteDoc, where, query, limit, orderBy } from '@angular/fire/firestore';
 import { elementAt, Observable } from 'rxjs';
 import { Note } from '../interfaces/note.interface';
 
@@ -115,7 +115,9 @@ export class NoteListService {
   }
 
   subNotesList(){
-    return onSnapshot(this.getNotesRef(), (list) => {
+    const q = query(this.getNotesRef(),  limit(3));
+
+    return onSnapshot(q, (list) => {
       this.normalNotes = [];
       list.forEach(element => {
         this.normalNotes.push(this.setNoteObject(element.data(), element.id));
