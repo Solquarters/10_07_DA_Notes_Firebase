@@ -115,7 +115,8 @@ export class NoteListService {
   }
 
   subNotesList(){
-    const q = query(this.getNotesRef(),where("marked", "==", true), limit(100));
+    // const q = query(this.getNotesRef(),where("marked", "==", true), limit(100));
+    const q = query(this.getNotesRef(), limit(100));
 
     return onSnapshot(q, (list) => {
       this.normalNotes = [];
@@ -123,7 +124,27 @@ export class NoteListService {
         this.normalNotes.push(this.setNoteObject(element.data(), element.id));
         // console.log(this.setNoteObject(element.data(), element.id));
       });
+
+      list.docChanges().forEach((change) => {
+        if (change.type === "added") {
+            console.log("New note: ", change.doc.data());
+        }
+        if (change.type === "modified") {
+            console.log("Modified note: ", change.doc.data());
+        }
+        if (change.type === "removed") {
+            console.log("Removed note: ", change.doc.data());
+        }
+      });
+
+
+
     });
+
+    
+
+
+
   }
 
 
