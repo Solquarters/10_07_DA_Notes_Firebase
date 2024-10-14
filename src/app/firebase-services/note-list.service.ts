@@ -121,7 +121,7 @@ let SubCollectionRef = collection(this.firestore, "notes/0YqqoX84t0gzNLwDAjfM/no
     // const q = query(this.getNotesRef(),where("marked", "==", true), limit(100));
     const q = query(this.getNotesRef(), limit(100));
 
-    return onSnapshot(SubCollectionRef, (list) => {
+    return onSnapshot(q, (list) => {
       this.normalNotes = [];
       list.forEach(element => {
         this.normalNotes.push(this.setNoteObject(element.data(), element.id));
