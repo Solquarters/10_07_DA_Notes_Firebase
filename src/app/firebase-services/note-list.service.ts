@@ -116,7 +116,7 @@ export class NoteListService {
 
   subNotesList(){
 
-let SubCollectionRef = collection(doc(collection(this.firestore, "notes"), "0YqqoX84t0gzNLwDAjfM"), "notesExtra");
+let SubCollectionRef = collection(this.firestore, "notes/0YqqoX84t0gzNLwDAjfM/notesExtra");
 
     // const q = query(this.getNotesRef(),where("marked", "==", true), limit(100));
     const q = query(this.getNotesRef(), limit(100));
