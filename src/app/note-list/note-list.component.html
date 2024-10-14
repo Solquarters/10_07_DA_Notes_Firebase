@@ -150,7 +150,15 @@
           } -->
 
           @for (note of getList(); track note) {
-            <app-note [note]="note"></app-note>
+
+            @if (favFilter == 'fav' && note.marked == true) {
+                <app-note [note]="note"></app-note>
+            }
+            @else if(favFilter == 'all') {
+                <app-note [note]="note"></app-note>
+            }
+
+            
           }
 
 
