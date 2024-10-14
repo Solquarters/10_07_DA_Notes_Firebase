@@ -115,7 +115,7 @@ export class NoteListService {
   }
 
   subNotesList(){
-    const q = query(this.getNotesRef(),  limit(3));
+    const q = query(this.getNotesRef(),where("marked", "==", true), limit(100));
 
     return onSnapshot(q, (list) => {
       this.normalNotes = [];
